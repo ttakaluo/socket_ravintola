@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS= -Wall -I.
 EXE_NAME = socket_server
-FILES = main.o
+FILES = print_error.o talk_to_client.o main.o
 all: $(FILES)
 	$(CC) -o $(EXE_NAME) $(FILES) $(CFLAGS)
 
