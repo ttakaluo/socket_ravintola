@@ -17,7 +17,21 @@ void error(char *msg)
 int talk_to_client(int newsockfd){
 
 	//this is the child-process handling incoming communication
+	char buffer[256];
+	int n;
+	memset(buffer,0,256);
 
+	do{
+		n = read(newsockfd,buffer,255);
+		if (n < 0) {
+			error("ERROR reading from socket");
+			return 1;
+		}
+	}
+	while (n != 0) ;
+	close(newsockfd);
+	printf("Got this message: %s\n", buffer);
+	return 0;
 }
 
 int main(int argc, char *argv[]){
@@ -72,21 +86,7 @@ int main(int argc, char *argv[]){
 	
 	if (childPid == 0) {
 	
-		char buffer[256];
-		int n;
-		memset(buffer,0,256);
-
-		do{
-			n = read(newsockfd,buffer,255);
-			if (n < 0) {
-				error("ERROR reading from socket");
-				return 1;
-			}
-		}
-		while (n != 0) ;
-
-		printf("Got this message: %s\n", buffer);
-	
+		talk_to_client(newsockfd);
 		return 0;
 	}
 	else if (childPid == -1) {
