@@ -1,3 +1,6 @@
 socket
+socket_server
+socket_client_ex
+socket_server_ex
 *.swp
 *.o
