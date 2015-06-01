@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "print_error.h"
+#include "fifod.h"
 
 int talk_to_client(int newsockfd){
 
@@ -20,6 +21,6 @@ int talk_to_client(int newsockfd){
 	}
 	while (n != 0) ;
 	close(newsockfd);
-	printf("Got this message: %s\n", buffer);
+	write(logfile, buffer, strlen(buffer));
 	return 0;
 }

@@ -4,11 +4,16 @@
 #include <stdlib.h>					//atoi, exit
 #include <string.h> 					//memset
 #include <sys/types.h> 
+#include <sys/stat.h> 
+#include <fcntl.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>  					//fork
 #include "print_error.h" 				//error-handling function => void error(char *msg)
 #include "talk_to_client.h"  				//child-process read-socket
+#include "fifod.h"  //contains hardcoded path	//create a fifo-pipe daemon
+
+//#define LOGFILE "/tmp/logfile"
 
 int main(int argc, char *argv[]){
 
@@ -16,6 +21,10 @@ int main(int argc, char *argv[]){
          fprintf(stderr,"ERROR, no port provided\n");
          exit(1);
 	}
+	//int logfile;
+	//logfile = open(LOGFILE, O_WRONLY | O_APPEND | O_CREAT, 0777); //create log-file
+
+	fifod();					//create fifo-daemon
 
 	int sockfd;						//create socket
 	sockfd = socket(AF_INET, SOCK_STREAM, 0); // ipv4 connection, sequenced two-way
