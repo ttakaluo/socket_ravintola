@@ -5,7 +5,7 @@
 #include "print_error.h"
 #include "fifod.h"
 
-int talk_to_client(int newsockfd){
+int talk_to_client(int newsockfd, int logfile){
 
 	//this is the child-process handling incoming communication
 	char buffer[256];

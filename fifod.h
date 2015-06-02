@@ -1,3 +1,3 @@
-int fifod(void);
+int fifod(int logfile);
 
-int logfile;
+//int logfile;

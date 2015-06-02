@@ -13,7 +13,7 @@
 #include "talk_to_client.h"  				//child-process read-socket
 #include "fifod.h"  //contains hardcoded path	//create a fifo-pipe daemon
 
-//#define LOGFILE "/tmp/logfile"
+#define LOGFILE "/tmp/logfile"
 
 int main(int argc, char *argv[]){
 
@@ -21,10 +21,10 @@ int main(int argc, char *argv[]){
          fprintf(stderr,"ERROR, no port provided\n");
          exit(1);
 	}
-	//int logfile;
-	//logfile = open(LOGFILE, O_WRONLY | O_APPEND | O_CREAT, 0777); //create log-file
+	int logfile;
+	logfile = open(LOGFILE, O_WRONLY | O_APPEND | O_CREAT, 0777); //create log-file
 
-	fifod();					//create fifo-daemon
+	fifod(logfile);					//create fifo-daemon
 
 	int sockfd;						//create socket
 	sockfd = socket(AF_INET, SOCK_STREAM, 0); // ipv4 connection, sequenced two-way
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 		childPid = fork();
 		
 		if (childPid == 0) {
-			talk_to_client(newsockfd);
+			talk_to_client(newsockfd,logfile);
 			return 0;
 		}
 		else if (childPid == -1) {

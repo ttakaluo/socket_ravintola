@@ -5,12 +5,13 @@
 #include <unistd.h>
 #include "print_error.h"
 
-#define LOGFILE "/tmp/logfile"
+//#define LOGFILE "/tmp/logfile"
 #define FIFOFILE "/tmp/fifo_pipe"
 
-int fifod(void){
+int fifod(int logfile){
 
-	int fifo_pipe, n, logfile;
+	int fifo_pipe, n;
+	//int logfile;
 	char buffer[255];
 
 	pid_t childPid;
@@ -24,7 +25,7 @@ int fifod(void){
 
 	n = mkfifo(FIFOFILE, 0777);		//create world-accessible pipe
 	
-	logfile = open(LOGFILE, O_WRONLY | O_APPEND | O_CREAT, 0777);
+//	logfile = open(LOGFILE, O_WRONLY | O_APPEND | O_CREAT, 0777);
 
 	while (1) {
 
